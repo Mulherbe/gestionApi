@@ -16,6 +16,10 @@ class CreateSubscriptionsTable extends Migration
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->date('dateStart');
+            $table->date('dateEnd');
+            $table->date('frequence');
+            $table->boolean('state')->nullable();
         });
     }
 
