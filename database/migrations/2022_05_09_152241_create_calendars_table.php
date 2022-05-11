@@ -16,6 +16,10 @@ class CreateCalendarsTable extends Migration
         Schema::create('calendars', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->date('date');
+            $table->string('title');
+            $table->string('comment')->nullable();
+            $table->unsignedBigInteger('id_user');
         });
     }
 

@@ -18,8 +18,9 @@ class CreateClientsTable extends Migration
             $table->timestamps();
             $table->string('firstName');
             $table->string('LastName');
-            $table->string('phone');
-            $table->string('company');            
+            $table->string('phone')->nullable();;
+            $table->string('company')->nullable();;
+            $table->unsignedBigInteger('id_user');
         });
     }
 

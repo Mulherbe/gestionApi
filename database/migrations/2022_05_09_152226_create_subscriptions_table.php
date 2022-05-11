@@ -20,6 +20,8 @@ class CreateSubscriptionsTable extends Migration
             $table->date('dateEnd');
             $table->date('frequence');
             $table->boolean('state')->nullable();
+            $table->unsignedBigInteger('id_cost');
+
         });
     }
 

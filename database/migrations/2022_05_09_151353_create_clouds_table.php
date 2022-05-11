@@ -19,6 +19,9 @@ class CreateCloudsTable extends Migration
             $table->string('pathFichier');
             $table->string('title');
             $table->string('comment')->nullable();
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_category');
+
         });
     }
 

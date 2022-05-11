@@ -18,6 +18,8 @@ class CreateTodosTable extends Migration
             $table->timestamps();
             $table->string('title');
             $table->boolean('state')->nullable();
+            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_category');
         });
     }
 

@@ -17,7 +17,9 @@ class CreateWallpapersTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('pathImage');
-            $table->string('device');            
+            $table->string('device');
+            $table->unsignedBigInteger('id_user');
+          
         });
     }
 
