@@ -5,61 +5,111 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Cloud;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class CloudController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Fetch images
+     * @param NA
+     * @return JSON response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        // $images = Cloud::all();
+        // return response()->json(["status" => "success", "count" => count($images), "data" => $images]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Upload Image
+     * @param $request
+     * @return JSON response
      */
-    public function store(Request $request)
-    {
-        //
+    public function upload(Request $request) {
+        $imagesName = [];
+        $response = [];
+
+        $validator = Validator::make($request->all(),
+            [
+                'images' => 'required',
+                'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]
+        );
+
+        if($validator->fails()) {
+            return response()->json(["status" => "failed", "message" => "Validation error", "errors" => $validator->errors()]);
+        }
+
+        if($request->has('images')) {
+            foreach($request->file('images') as $image) {
+                $filename = time(). '.'.$image->getClientOriginalExtension();
+                $image->move('uploads/', $filename);
+
+                Cloud::create([
+                    'pathFichier' => $filename,
+                    'title' => 'toto',
+                    'id_user' => 1,
+                    'id_category' => 1,
+
+                ]);
+            }
+
+            $response["status"] = "successs";
+            $response["message"] = "Success! image(s) uploaded";
+        }
+
+        else {
+            $response["status"] = "failed";
+            $response["message"] = "Failed! image(s) not uploaded";
+        }
+        return response()->json($response);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cloud  $cloud
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Cloud $cloud)
-    {
-        //
-    }
+    public function getSizeTotalCloud(){
+        function formatSize($bytes){ 
+            $kb = 1024;
+            $mb = $kb * 1024;
+            $gb = $mb * 1024;
+            $tb = $gb * 1024;
+            
+            if (($bytes >= 0) && ($bytes < $kb)) {
+            return $bytes . ' B';
+            
+            } elseif (($bytes >= $kb) && ($bytes < $mb)) {
+            return ceil($bytes / $kb) . ' KB';
+            
+            } elseif (($bytes >= $mb) && ($bytes < $gb)) {
+            return ceil($bytes / $mb) . ' MB';
+            
+            } elseif (($bytes >= $gb) && ($bytes < $tb)) {
+            return ceil($bytes / $gb) . ' GB';
+            
+            } elseif ($bytes >= $tb) {
+            return ceil($bytes / $tb) . ' TB';
+            } else {
+            return $bytes . ' B';
+            }
+            };
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cloud  $cloud
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cloud $cloud)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Cloud  $cloud
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Cloud $cloud)
-    {
-        //
+            function folderSize($dir){
+                $total_size = 0;
+                $count = 0;
+                $dir_array = scandir($dir);
+                  foreach($dir_array as $key=>$filename){
+                    if($filename!=".." && $filename!="."){
+                       if(is_dir($dir."/".$filename)){
+                          $new_foldersize = foldersize($dir."/".$filename);
+                          $total_size = $total_size+ $new_foldersize;
+                        }else if(is_file($dir."/".$filename)){
+                          $total_size = $total_size + filesize($dir."/".$filename);
+                          $count++;
+                        }
+                   }
+                 }
+                return $total_size;
+                };
+        $folder_path = "uploads";
+        return formatSize(folderSize($folder_path));
     }
 }

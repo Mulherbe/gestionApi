@@ -7,6 +7,7 @@ use App\Http\Controllers\API\CalendarController;
 use App\Http\Controllers\API\NoteController;
 use App\Http\Controllers\API\TodoController;
 use App\Http\Controllers\API\SettingController;
+use App\Http\Controllers\API\CloudController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,4 +38,5 @@ Route::get('settingUser/{id}', [SettingController::class, 'getAllSettingByUser']
 
 
 
-
+Route::get('images', [CloudController::class, 'getSizeTotalCloud'])->name('images');
+Route::post('images', [CloudController::class, 'upload']);
