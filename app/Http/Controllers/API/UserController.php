@@ -17,10 +17,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        // $users = UserResource::all();
-        // return $users;    
-        $users = User::paginate();
-        return  UserResource::collection($users) ;
+        $users = User::all();
+        return $users;    
+        // $users = User::paginate();
+        // return  UserResource::collection($users) ;
     }
 
     /**
