@@ -20,9 +20,6 @@ use App\Http\Controllers\API\CloudController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 
 Route::apiResource("users", UserController::class);
 
@@ -36,7 +33,12 @@ Route::get('todoUser/{id}', [TodoController::class, 'getAllTodoByUser']);
 
 Route::get('settingUser/{id}', [SettingController::class, 'getAllSettingByUser']);
 
+// get size total cloud
 
+Route::get('getSizeCloud', [CloudController::class, 'getSizeTotalCloud']);
+// get size by user cloud
 
-Route::get('images', [CloudController::class, 'getSizeTotalCloud'])->name('images');
-Route::post('images', [CloudController::class, 'upload']);
+Route::post('getSizeCloudByUser', [CloudController::class, 'getSizeCloudByUser']);
+
+// upload files 
+Route::post('uploadFiles', [CloudController::class, 'upload']);
