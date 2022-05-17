@@ -112,7 +112,9 @@ class CloudController extends Controller
                 return $total_size;
                 };
         $folder_path = "uploads"  ;
-        return formatSize(folderSize($folder_path));
+        $cloudSize = ['size'=>formatSize(folderSize($folder_path))];
+
+        return(  $cloudSize );
     }
     public function getSizeCloudByUser(Request $request){
 
