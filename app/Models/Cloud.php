@@ -14,6 +14,5 @@ class Cloud extends Model
         "title",
         "id_user",
        "id_category"
-
     ];
 }

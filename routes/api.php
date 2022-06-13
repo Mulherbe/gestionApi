@@ -20,7 +20,7 @@ use App\Http\Controllers\API\CloudController;
 |
 */
 
-
+//  Route Api web
 Route::apiResource("users", UserController::class);
 
 Route::apiResource('calendar', CalendarController::class);
@@ -34,11 +34,16 @@ Route::get('todoUser/{id}', [TodoController::class, 'getAllTodoByUser']);
 Route::get('settingUser/{id}', [SettingController::class, 'getAllSettingByUser']);
 
 // get size total cloud
-
 Route::get('getSizeCloud', [CloudController::class, 'getSizeTotalCloud']);
 // get size by user cloud
-
 Route::post('getSizeCloudByUser', [CloudController::class, 'getSizeCloudByUser']);
+// upload files 
+Route::post('uploadFiles', [CloudController::class, 'upload']);
 
 // upload files 
 Route::post('uploadFiles', [CloudController::class, 'upload']);
+
+// Route API appli
+
+Route::post('addTodo', [TodoController::class, 'addTodo']);
+Route::get('getTodoByUser', [TodoController::class, 'getTodoByUser']);
