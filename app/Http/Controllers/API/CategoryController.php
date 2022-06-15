@@ -13,9 +13,20 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getTodo(Request $request)
     {
-        //
+        // $Category = Category::find(1);
+        // return $Category->notes()->get();
+        $user_id = $request['id_user'];
+        $cats = Category::all() ;
+        $retour = [];
+        foreach($cats as $cat){
+            if( count($cat->todos()->where('id_user' , $user_id)->get()) != 0 ){
+                $retour[] = [$cat['name'] => $cat->todos()->where('id_user' , $user_id)->get()];
+            }
+        }
+        return $retour;
+
     }
 
     /**
@@ -49,8 +60,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, category $category)
     {
-        //
-    }
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -63,3 +73,4 @@ class CategoryController extends Controller
         //
     }
 }
+

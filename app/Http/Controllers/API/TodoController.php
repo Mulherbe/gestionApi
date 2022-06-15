@@ -56,47 +56,23 @@ class TodoController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Todo  $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Todo $todo)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Todo  $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Todo $todo)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Todo  $todo
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Todo $todo)
-    {
-        //
-    }
-
     public function getAllTodoByUser(Request $request) 
     {   
         $user_id = $request['id'];
-        $Note = Todo::all()->where('id_user' , $user_id );   
+        $Todo = Todo::all()->where('id_user' , $user_id );   
         $Category = Category::all();
-        $toto = false;
-
-        return [$Category,$Note];
+        return [$Category,$Todo];
     }
+
+    public function getAllTodoBackOffice(Request $request) 
+    {   
+        $user_id = $request['id_user'];
+        $Todo = Todo::all()->where('id_user' , $user_id );   
+        $Category = Category::all();
+
+        return [$Category, $Todo];
+
+    }
+
+    
 }

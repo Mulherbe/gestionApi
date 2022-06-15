@@ -8,6 +8,7 @@ use App\Http\Controllers\API\NoteController;
 use App\Http\Controllers\API\TodoController;
 use App\Http\Controllers\API\SettingController;
 use App\Http\Controllers\API\CloudController;
+use App\Http\Controllers\API\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ use App\Http\Controllers\API\CloudController;
 
 //  Route Api web
 Route::apiResource("users", UserController::class);
+
+
+Route::apiResource('Category', CategoryController::class);
 
 Route::apiResource('calendar', CalendarController::class);
 
@@ -43,7 +47,29 @@ Route::post('uploadFiles', [CloudController::class, 'upload']);
 // upload files 
 Route::post('uploadFiles', [CloudController::class, 'upload']);
 
+// todo back office
+Route::post('getTodo', [CategoryController::class, 'getTodo']);
+
 // Route API appli
 
+// TODO
 Route::post('addTodo', [TodoController::class, 'addTodo']);
 Route::get('getTodoByUser', [TodoController::class, 'getTodoByUser']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
