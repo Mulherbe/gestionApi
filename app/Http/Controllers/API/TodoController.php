@@ -69,10 +69,27 @@ class TodoController extends Controller
         $user_id = $request['id_user'];
         $Todo = Todo::all()->where('id_user' , $user_id );   
         $Category = Category::all();
-
         return [$Category, $Todo];
-
     }
 
-    
+    public function deleteTodo(Request $request){
+
+        $id_task = $request['id_task'];
+        $Todo = Todo::find( $id_task );
+        $Todo->delete();
+        return $Todo;
+    }
+
+    public function updateState(Request $request){
+
+        $idTask = $request->idTask['id'];
+        $stateTask = $request->idTask['state'];
+
+        $Todo = Todo::find($idTask);
+        $Todo ->update(['state' => !$stateTask]);
+
+        return $stateTask;
+    }
+
+
 }

@@ -56,8 +56,9 @@ Route::post('getTodo', [CategoryController::class, 'getTodo']);
 Route::post('addTodo', [TodoController::class, 'addTodo']);
 Route::get('getTodoByUser', [TodoController::class, 'getTodoByUser']);
 
+Route::post('deleteTodo', [TodoController::class, 'deleteTodo']);
 
-
+Route::post('updateState', [TodoController::class, 'updateState']);
 
 
 
