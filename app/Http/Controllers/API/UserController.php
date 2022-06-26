@@ -22,7 +22,10 @@ class UserController extends Controller
         // $users = User::paginate();
         // return  UserResource::collection($users) ;
     }
-
+    public function deleteUser(Request $request){
+        $return  =  User::withTrashed()->where('id', $request['id'])->delete();
+        return $return;
+    }
     /**
      * Store a newly created resource in storage.
      *

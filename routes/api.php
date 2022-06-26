@@ -24,6 +24,8 @@ use App\Http\Controllers\API\CategoryController;
 //  Route Api web
 Route::apiResource("users", UserController::class);
 
+Route::post('deleteUser', [UserController::class, 'deleteUser']);
+
 
 Route::apiResource('Category', CategoryController::class);
 
