@@ -20,7 +20,7 @@ class ClientFactory extends Factory
 
         return [
         'firstName' => $this->faker->firstName(),
-        'LastName' => $this->faker->lastname(),
+        'name' => $this->faker->lastname(),
         'phone' =>$this->faker->phoneNumber(),
         'company' => $this->faker->company(),
         'id_user' => 1

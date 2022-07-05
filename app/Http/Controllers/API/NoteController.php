@@ -18,7 +18,10 @@ class NoteController extends Controller
     {
         //
     }
-
+    public function getNoteById(Request $request){
+        $return  =  Note::all()->where('id_user', $request['id_user']);
+        return   $return;
+    }
     /**
      * Store a newly created resource in storage.
      *

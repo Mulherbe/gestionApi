@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
-
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -22,7 +22,14 @@ class UserController extends Controller
         // $users = User::paginate();
         // return  UserResource::collection($users) ;
     }
+    public function getUserById(Request $request){
+        // $return  =  User::all()->where('id', $request['id_user']);
+        $return = Auth::user();
+        return   $return;
+    }
+    
     public function deleteUser(Request $request){
+        
         $return  =  User::withTrashed()->where('id', $request['id'])->delete();
         return $return;
     }

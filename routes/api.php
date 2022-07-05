@@ -9,6 +9,7 @@ use App\Http\Controllers\API\TodoController;
 use App\Http\Controllers\API\SettingController;
 use App\Http\Controllers\API\CloudController;
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +22,24 @@ use App\Http\Controllers\API\CategoryController;
 |
 */
 
+
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/login', [AuthController::class, 'login']);
+
 //  Route Api web
 Route::apiResource("users", UserController::class);
 
 Route::post('deleteUser', [UserController::class, 'deleteUser']);
 
+// Route::post('getUserById', [UserController::class, 'getUserById'])->middleware('auth:sanctum');
+
+Route::post('/getNoteById', [NoteController::class, 'getNoteById']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+
+Route::post('/getUserById', [UserController::class, 'getUserById']);
+});
 
 Route::apiResource('Category', CategoryController::class);
 
