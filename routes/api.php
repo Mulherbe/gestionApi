@@ -36,10 +36,7 @@ Route::post('deleteUser', [UserController::class, 'deleteUser']);
 
 Route::post('/getNoteById', [NoteController::class, 'getNoteById']);
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
 
-Route::post('/getUserById', [UserController::class, 'getUserById']);
-});
 
 Route::apiResource('Category', CategoryController::class);
 
@@ -68,19 +65,19 @@ Route::post('getTodo', [CategoryController::class, 'getTodo']);
 
 // Route API appli
 
-// TODO
-Route::post('addTodo', [TodoController::class, 'addTodo']);
-Route::get('getTodoByUser', [TodoController::class, 'getTodoByUser']);
+    Route::group(['middleware' => ['auth:sanctum']], function () {
 
-Route::post('deleteTodo', [TodoController::class, 'deleteTodo']);
+        Route::post('/getUserById', [UserController::class, 'getUserById']);
 
-Route::post('updateState', [TodoController::class, 'updateState']);
+            // TODO
+        Route::post('addTodo', [TodoController::class, 'addTodo']);
+        
+        Route::post('getTodoByUser', [TodoController::class, 'getTodoByUser']);
 
+        Route::post('deleteTodo', [TodoController::class, 'deleteTodo']);
 
-
-
-
-
+        Route::post('updateState', [TodoController::class, 'updateState']);
+    });
 
 
 

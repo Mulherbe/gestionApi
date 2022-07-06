@@ -82,13 +82,13 @@ class TodoController extends Controller
 
     public function updateState(Request $request){
 
-        $idTask = $request->idTask['id'];
-        $stateTask = $request->idTask['state'];
+        $idTask = $request['id'];
+        $stateTask = $request['state'];
 
         $Todo = Todo::find($idTask);
         $Todo ->update(['state' => !$stateTask]);
 
-        return $stateTask;
+        return ['Sucess'];
     }
 
 
