@@ -18,8 +18,8 @@ class CreateWalletsTable extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('comment')->nullable();
-            $table->Integer('priceBuy');
-            $table->Integer('quantity');
+            $table->float('priceBuy');
+            $table->float('quantity');
             $table->string('device');
             $table->date('date');
             $table->unsignedBigInteger('id_user');

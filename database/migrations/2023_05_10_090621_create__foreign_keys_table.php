@@ -43,7 +43,8 @@ class CreateForeignKeysTable extends Migration
             $table->foreign('id_category')->references('id')->on('Categories')->onDelete('cascade');
         });
         Schema::table('costs', function(Blueprint $table) {
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');.
+            
             $table->foreign('id_category')->references('id')->on('Categories')->onDelete('cascade');
         });
         Schema::table('subscriptions', function(Blueprint $table) {

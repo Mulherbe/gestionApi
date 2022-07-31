@@ -6,83 +6,79 @@ use App\Http\Controllers\Controller;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Validator;
+
 
 class NoteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    public function getNoteByUser(Request $request)
     {
-        //
-    }
-    public function getNoteById(Request $request){
-        $return  =  Note::all()->where('id_user', $request['id_user']);
-        return   $return;
-    }
+        $user_id = $request['id'];
+        $note = Note::all()->where('id_user' , $user_id );
+        return $note;
+     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function addNote(Request $request)
     {
-        //
+        
+        $validator = Validator::make($request->all(),
+        [
+            'title' => 'required',
+            'text' => 'required',
+            'id_user' => 'required'
+        ]
+    );
+
+    if($validator->fails()) {
+        return response()->json(["status" => "failed", "message" => "Validation error", "errors" => $validator->errors()]);
+    }
+    else{
+
+        $response["status"] = "successs";
+        Note::create([
+            'title' => $request['title'],
+            'text' => $request['text'],
+            'id_user' => $request['id_user'],
+            'id_category' =>  1,
+        ]);
+        return response()->json($response);
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Note  $note
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Note $note)
-    {
-        //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Note  $note
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Note $note)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Note  $note
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Note $note)
-    {
-        //
-    }
     public function getAllNoteByUser(Request $request) 
     {   
         $user_id = $request['id'];
         $Note = Note::all()->where('id_user' , $user_id );   
         $Category = Category::all();
-        $toto = false;
-
         return [$Category,$Note];
     }
-    
-    // public function getAllNoteByCat(Request $request) 
-    // {   
-    //     $user_id = $request['id'];
-    //     $Note = Note::all()->where('id_user' , $user_id );        
-    //     return $Note ->map(function ($group) {
-    //         $group->notes;
-    //         return $group;
-    //       });
-    // }
+
+
+
+    public function deleteNote(Request $request){
+
+        $id_task = $request['id_task'];
+        $Note = Note::find( $id_task );
+        $Note->delete();
+        return $Note;
+    }
+
+    public function updateNote(Request $request){
+
+        $idNote= $request['id'];
+
+        $Note = Note::find($idNote);
+        $Note ->update(['text' => $request['text']]);
+        $Note ->update(['title' => $request['title']]);
+        return $Note;
+    }
 }

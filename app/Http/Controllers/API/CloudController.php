@@ -116,52 +116,63 @@ class CloudController extends Controller
 
         return(  $cloudSize );
     }
+    
+    
+    
+    
+    
     public function getSizeCloudByUser(Request $request){
-
-        function formatSize($bytes){ 
-            $kb = 1024;
-            $mb = $kb * 1024;
-            $gb = $mb * 1024;
-            $tb = $gb * 1024;
-            
-            if (($bytes >= 0) && ($bytes < $kb)) {
-            return $bytes . ' B';
-            
-            } elseif (($bytes >= $kb) && ($bytes < $mb)) {
-            return ceil($bytes / $kb) . ' KB';
-            
-            } elseif (($bytes >= $mb) && ($bytes < $gb)) {
-            return ceil($bytes / $mb) . ' MB';
-            
-            } elseif (($bytes >= $gb) && ($bytes < $tb)) {
-            return ceil($bytes / $gb) . ' GB';
-            
-            } elseif ($bytes >= $tb) {
-            return ceil($bytes / $tb) . ' TB';
-            } else {
-            return $bytes . ' B';
-            }
-            };
-
-            function folderSize($dir){
-                $total_size = 0;
-                $count = 0;
-                $dir_array = scandir($dir);
-                  foreach($dir_array as $key=>$filename){
-                    if($filename!=".." && $filename!="."){
-                       if(is_dir($dir."/".$filename)){
-                          $new_foldersize = foldersize($dir."/".$filename);
-                          $total_size = $total_size+ $new_foldersize;
-                        }else if(is_file($dir."/".$filename)){
-                          $total_size = $total_size + filesize($dir."/".$filename);
-                          $count++;
-                        }
-                   }
-                 }
-                return $total_size;
-                };
         $folder_path = "uploads/".$request['id_user']  ;
-        $return = ['size' => formatSize(folderSize($folder_path))];
-        return $return;
+        $size = CloudController::folderSize($folder_path);
+        $FormatSize = CloudController::formatSize($size);
+        return ['size' => $FormatSize ];
     }
+
+   static  function folderSize($dir){
+        $total_size = 0;
+        $count = 0;
+        $dir_array = scandir($dir);
+          foreach($dir_array as $key=>$filename){
+            if($filename!=".." && $filename!="."){
+               if(is_dir($dir."/".$filename)){
+                  $new_foldersize = foldersize($dir."/".$filename);
+                  $total_size = $total_size+ $new_foldersize;
+                }else if(is_file($dir."/".$filename)){
+                  $total_size = $total_size + filesize($dir."/".$filename);
+                  $count++;
+            }
+           }
+         }
+        return $total_size;
+        }
+
+
+
+        
+
+   static function formatSize(){ 
+        $kb = 1024;
+        $mb = $kb * 1024;
+        $gb = $mb * 1024;
+        $tb = $gb * 1024;
+        
+        if (($bytes >= 0) && ($bytes < $kb)) {
+        return $bytes . ' B';
+        
+        } elseif (($bytes >= $kb) && ($bytes < $mb)) {
+        return ceil($bytes / $kb) . ' KB';
+        
+        } elseif (($bytes >= $mb) && ($bytes < $gb)) {
+        return ceil($bytes / $mb) . ' MB';
+        
+        } elseif (($bytes >= $gb) && ($bytes < $tb)) {
+        return ceil($bytes / $gb) . ' GB';
+        
+        } elseif ($bytes >= $tb) {
+        return ceil($bytes / $tb) . ' TB';
+        } else {
+        return $bytes . ' B';
+        }
+        }
 }
+

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\category;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -15,8 +15,6 @@ class CategoryController extends Controller
      */
     public function getTodo(Request $request)
     {
-        // $Category = Category::find(1);
-        // return $Category->notes()->get();
         $user_id = $request['id_user'];
         $cats = Category::all() ;
         $retour = [];
@@ -26,7 +24,6 @@ class CategoryController extends Controller
             }
         }
         return $retour;
-
     }
 
     /**

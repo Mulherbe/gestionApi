@@ -39,6 +39,7 @@ class AuthController extends Controller
             ->json(['data' => $user,'access_token' => $token, 'token_type' => 'Bearer', ]);
     }
 
+
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only('email', 'password')))
@@ -52,8 +53,11 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()
-            ->json(['message' => 'Hi '.$user->name.', welcome to home','access_token' => $token, 'token_type' => 'Bearer', 'id_user' => $user->id]);
+            ->json(['name' =>$user->name,'access_token' => $token, 'token_type' => 'Bearer', 'id_user' => $user->id]);
     }
+
+
+
 
     public function loginAdmin(Request $request)
     {   
@@ -61,7 +65,7 @@ class AuthController extends Controller
         {
             return response()
                 ->json(['message' => 'Unauthorized_credential'], 401);
-        }
+        }D
 
         if(Auth::user()->role_id !== 2) {
             return response()

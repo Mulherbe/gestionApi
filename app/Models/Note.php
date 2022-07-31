@@ -16,4 +16,10 @@ class Note extends Model
         return $this->belongsTo(Category::class, 'id_category');
     }
 
+    protected $fillable = [
+        "title",
+        "text",
+        "id_user",
+    ];
+
 }

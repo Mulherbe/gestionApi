@@ -10,6 +10,7 @@ use App\Http\Controllers\API\SettingController;
 use App\Http\Controllers\API\CloudController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\WalletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,24 +66,34 @@ Route::post('getTodo', [CategoryController::class, 'getTodo']);
 
 // Route API appli
 
-    Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::group()['middleware' => ['auth:sanctum']], function () {
 
         Route::post('/getUserById', [UserController::class, 'getUserById']);
 
-            // TODO
+        // TODO
         Route::post('addTodo', [TodoController::class, 'addTodo']);
-        
         Route::post('getTodoByUser', [TodoController::class, 'getTodoByUser']);
-
         Route::post('deleteTodo', [TodoController::class, 'deleteTodo']);
-
         Route::post('updateState', [TodoController::class, 'updateState']);
+
+        // WALLET
+        Route::post('/addValueWallet', [WalletController::class, 'addValueWallet']);
+        Route::post('/getWalletByUser', [WalletController::class, 'getWalletByUser']);
+        Route::post('/getPriceCrypto', [WalletController::class, 'getPriceCrypto']);
+
+        // NOTE
+
+        Route::post('addNote', [NoteController::class, 'addNote']);
+        Route::post('getNoteByUser', [NoteController::class, 'getNoteByUser']);
+        Route::post('deleteNote', [NoteController::class, 'deleteNote']);
+        Route::post('updateNote', [NoteController::class, 'updateNote']);
+
     });
 
 
 
 
-
+    
 
 
 
